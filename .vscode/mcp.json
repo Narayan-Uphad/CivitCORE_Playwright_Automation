@@ -1,0 +1,22 @@
+{
+  "servers": {
+    "playwright-test": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "playwright",
+        "run-test-mcp-server"
+      ]
+    }
+  },
+  "inputs": []
+}
+
+{
+  "servers": {
+    "selectorshub": {
+      "command": "npx",
+      "args": ["-y", "selectorshub-mcp"]
+    }
+  }
+}

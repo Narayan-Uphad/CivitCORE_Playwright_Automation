@@ -1,0 +1,25 @@
+{
+  "cucumber.features": ["features/**/*.feature"],
+  "cucumber.glue": ["src/steps/**/*.ts", "src/support/**/*.ts"],
+
+  // Binds .feature files to the language contributed by CucumberOpen.cucumber-official,
+  // which supplies both the Gherkin colouring and the cucumber file icon.
+  "files.associations": { "*.feature": "cucumber" },
+
+  // The Cucumber extension colours Gherkin via semantic tokens, so this must stay enabled.
+  "editor.semanticHighlighting.enabled": true,
+  "[cucumber]": {
+    "editor.semanticHighlighting.enabled": true,
+    "editor.defaultFormatter": "CucumberOpen.cucumber-official",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.wordWrap": "off"
+  },
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "search.exclude": {
+    "reports": true,
+    "allure-report": true,
+    "allure-results": true
+  }
+}

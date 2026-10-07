@@ -1,0 +1,16 @@
+export { DesignationPages } from './DesignationPages';
+export { DesignationApiMonitor } from './DesignationApiMonitor';
+export type { DesignationApiCall, DesignationOperation, DesignationRecord } from './DesignationApiMonitor';
+export { DesignationListPage } from './DesignationListPage';
+export type { FilterColumn, GridRow, RowAction } from './DesignationListPage';
+export { DesignationFormDialog } from './DesignationFormDialog';
+export type { FormField, SubmitOutcome } from './DesignationFormDialog';
+export { DesignationAccessPage } from './DesignationAccessPage';
+export { DesignationActivityLogPage } from './DesignationActivityLogPage';
+export { DesignationCreationPage } from './DesignationCreationPage';
+export { DesignationCrossModulePage } from './DesignationCrossModulePage';
+export type { PostLookupContext } from './DesignationCrossModulePage';
+export { DesignationDeletionPage, DEPENDENCY_MESSAGE } from './DesignationDeletionPage';
+export { DesignationToasterPage } from './DesignationToasterPage';
+export { DesignationUiVisualPage } from './DesignationUiVisualPage';
+export { DesignationUpdatePage } from './DesignationUpdatePage';

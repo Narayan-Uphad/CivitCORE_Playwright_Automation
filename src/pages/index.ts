@@ -1,0 +1,10 @@
+export { MidcHomePage } from './MidcHomePage';
+export { DepartmentLoginPage } from './DepartmentLoginPage';
+export { MastersManagementPage } from './MastersManagementPage';
+export { DepartmentListPage } from './DepartmentListPage';
+export { DepartmentDialog } from './DepartmentDialog';
+export { DeleteConfirmationDialog } from './DeleteConfirmationDialog';
+export { DepartmentFlows } from './DepartmentFlows';
+export { LogoutPage } from './LogoutPage';
+export { DesignationPages } from './designation';
+export { PositionPage } from './PositionPage';
