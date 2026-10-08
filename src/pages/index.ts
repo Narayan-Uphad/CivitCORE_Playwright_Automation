@@ -8,3 +8,4 @@ export { DepartmentFlows } from './DepartmentFlows';
 export { LogoutPage } from './LogoutPage';
 export { DesignationPages } from './designation';
 export { PositionPage } from './PositionPage';
+export { LocationCategoryPages } from './location_category';

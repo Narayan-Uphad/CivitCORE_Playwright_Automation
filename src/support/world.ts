@@ -18,6 +18,7 @@ import {
   DepartmentListPage,
   DepartmentLoginPage,
   DesignationPages,
+  LocationCategoryPages,
   LogoutPage,
   MastersManagementPage,
   MidcHomePage,
@@ -25,6 +26,7 @@ import {
 } from '../pages';
 import { TestDataStore } from '../utils/test-data-generator';
 import { DesignationScenario } from './designation-scenario';
+import { LocationCategoryScenario } from './location-category-scenario';
 import { midcTestData } from '../test-data/midc.data';
 import { positionContext } from '../test-data/designation.data';
 
@@ -39,6 +41,8 @@ export interface PageObjects {
   logoutPage: LogoutPage;
   /** Designation Management page objects, one per feature file (see src/pages/designation). */
   designation: DesignationPages;
+  /** Location Category Management page objects (see src/pages/location_category). */
+  locationCategory: LocationCategoryPages;
   positionPage: PositionPage;
 }
 
@@ -56,6 +60,8 @@ export class CustomWorld extends World {
   testData = new TestDataStore();
   /** Values carried between Designation steps of a single scenario. */
   readonly designation = new DesignationScenario();
+  /** Values carried between Location Category steps of a single scenario. */
+  readonly locationCategory = new LocationCategoryScenario();
   tracingStarted = false;
   /** True when this World borrowed the run-wide context, which the After hook must not close. */
   usesSharedContext = false;
@@ -254,6 +260,7 @@ export class CustomWorld extends World {
         organization: midcTestData.organizationName,
         ...positionContext,
       }),
+      locationCategory: new LocationCategoryPages(page, mastersManagementPage),
       positionPage,
     };
   }

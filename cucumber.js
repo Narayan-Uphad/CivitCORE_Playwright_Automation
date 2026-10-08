@@ -8,6 +8,10 @@
  *                                           -> login, the 9 Designation features, logout, in that order,
  *                                              sharing ONE browser + ONE login
  *                                              (see `npm run test:designation:sequential`)
+ *            npx cucumber-js -p location-category-sequential
+ *                                           -> login, the 8 Location Category features, logout, in that order,
+ *                                              sharing ONE browser + ONE login
+ *                                              (see `npm run test:location-category:sequential`)
  *
  * A single run produces:
  *   reports/html/index.html        Cucumber HTML report (open with `npm run report:open`)
@@ -105,6 +109,20 @@ const designationSequentialPaths = [
   'features/department_management_features/logout.feature',
 ];
 
+/** Ordered Location Category run: login, the 8 Location Category features, logout (same shared session). */
+const locationCategorySequentialPaths = [
+  'features/department_management_features/department-login.feature',
+  'features/location_category_features/location_category_hierarchy_list.feature',
+  'features/location_category_features/location_category_permissions.feature',
+  'features/location_category_features/location_category_search_view.feature',
+  'features/location_category_features/location_category_creation.feature',
+  'features/location_category_features/location_category_update.feature',
+  'features/location_category_features/location_category_location_association.feature',
+  'features/location_category_features/location_category_deletion.feature',
+  'features/location_category_features/location_category_audit_log.feature',
+  'features/department_management_features/logout.feature',
+];
+
 const sequential = {
   ...common,
   paths: sequentialPaths,
@@ -129,5 +147,9 @@ module.exports = {
   'designation-sequential': {
     ...sequential,
     paths: designationSequentialPaths,
+  },
+  'location-category-sequential': {
+    ...sequential,
+    paths: locationCategorySequentialPaths,
   },
 };

@@ -154,6 +154,48 @@ cucumber.js                    Cucumber profiles
   Designation field and registering an Employee sends real invitations); Activity Log scenarios (no
   such screen); the CivitBUILD scenario.
 
+## Location Category Management
+
+`features/location_category_features/` is written in FRD vocabulary. Run it with
+`npm run test:location-category` (tag `@location_category`; scope other tag filters with it, because the
+`@TC_CivitCORE_*` ids are shared with the Designation features) or, in one shared login,
+`npm run test:location-category:sequential`.
+
+- **Layout**: page objects in `src/pages/location_category/`, steps in `src/steps/location_category_steps/`.
+  Steps used by more than one feature are in `common.steps.ts`; `helpers.ts` holds the building blocks and
+  `hooks.ts` the clean-up.
+
+  | Feature file | Steps (`src/steps/location_category_steps/`) | Page objects (`src/pages/location_category/`) |
+  |---|---|---|
+  | `location_category_hierarchy_list` | `hierarchy-list.steps.ts` | `LocationCategoryListPage` (also navigation) |
+  | `location_category_permissions` | `permissions.steps.ts` | `LocationCategoryListPage`, `LocationCategoryApi` |
+  | `location_category_search_view` | `search-view.steps.ts` | `LocationCategoryListPage` |
+  | `location_category_creation` | `creation.steps.ts` | `LocationCategoryFormDialog`, `LocationCategoryApi` |
+  | `location_category_update` | `update.steps.ts` | `LocationCategoryFormDialog`, `LocationCategoryApi` |
+  | `location_category_location_association` | `location-association.steps.ts` | `LocationCategoryLocationPage` |
+  | `location_category_deletion` | `deletion.steps.ts` | `LocationCategoryDeletionPage`, `LocationCategoryLocationPage` |
+  | `location_category_audit_log` | `audit-log.steps.ts` | `LocationCategoryActivityLogPage` |
+
+  All of them hang off `world.pages.locationCategory` (`LocationCategoryPages`), with per-scenario state in
+  `world.locationCategory` (`src/support/location-category-scenario.ts`).
+- **Vocabulary** (`src/test-data/location-category.data.ts`): Location Category Name = *Location Category*,
+  Parent Category = *Nest Location Under* + *Select Parent Location Category*, Save = *Add / Update Location
+  Category*. The form also requires a *Location Category Code* and a *Prod Code*, which the FRD does not
+  mention; the steps fill them. The row menu has **Edit and Delete only** (no View / Detail screen, no
+  system-generated ID on screen), and the grid has per-column filters instead of one search box.
+- **Test data**: the live master holds real categories and none of the FRD baseline (Country ... Depot), so
+  each scenario creates its own copy of a baseline category the first time it is named (through the API, parents
+  first) and the clean-up hook removes them (Locations first, then categories, deepest first). Names carry a
+  per-scenario suffix (`Zone Bdd12345678`); short names carry a 4-digit suffix when they have room (the field
+  accepts 10 characters although its message says 20). Real data is never edited or deleted. If a run is killed,
+  leftovers can be found by filtering the Location Category grid for `Bdd`.
+- **Optional users**: View-only / Editor / NoAccess / Auditor scenarios need `MIDC_VIEWER_*`, `MIDC_EDITOR_*`,
+  `MIDC_NOACCESS_*`, `MIDC_AUDITOR_*` credentials (see `.env.example`); without them (or in a shared session)
+  they are skipped with the reason in the report.
+- **Skipped by design** (reason is logged): scenarios that need a View / Detail screen or the Location Category
+  ID in the UI; the Activity Log feature (no such screen; the `@audit_log` hook fails instead of skipping once an
+  entry point appears); scenarios that need a second user.
+
 ## Writing scenarios
 
 Unique test data is generated inside the feature file, using the same `Date.now()` rules as the

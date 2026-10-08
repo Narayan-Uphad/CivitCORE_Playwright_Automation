@@ -109,3 +109,15 @@ export function getViewerCredentials(): { username: string; password: string } |
   const password = process.env.MIDC_VIEWER_PASSWORD ?? '';
   return username && password ? { username, password } : undefined;
 }
+
+/**
+ * Optional credentials of the extra users the Location Category permission scenarios sign in as:
+ * MIDC_<ROLE>_USERNAME / MIDC_<ROLE>_PASSWORD with ROLE = VIEWER | EDITOR | NOACCESS | AUDITOR.
+ * Scenarios that need a role without credentials are skipped.
+ */
+export function getRoleCredentials(role: string): { username: string; password: string } | undefined {
+  const key = role.trim().toUpperCase().replace(/[^A-Z]/g, '');
+  const username = readString(`MIDC_${key}_USERNAME`);
+  const password = process.env[`MIDC_${key}_PASSWORD`] ?? '';
+  return username && password ? { username, password } : undefined;
+}
