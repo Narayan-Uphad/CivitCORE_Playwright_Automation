@@ -1,6 +1,7 @@
-# MIDC Department Management — Cucumber BDD (Playwright + TypeScript)
+# MIDC / CivitCORE — Cucumber BDD (Playwright + TypeScript)
 
-Cucumber BDD version of the MIDC / CivitCORE Department Management Playwright suite.
+Cucumber BDD suite for the MIDC / CivitCORE portal: Department Management, Designation Management
+and Location Category Management.
 Feature files describe behaviour in business language; all technical detail (locators,
 waits, assertions) lives in TypeScript page objects and step definitions.
 
@@ -36,7 +37,7 @@ later, or set `BROWSER_EXECUTABLE_PATH` to a local Chrome/Chromium.
 
 | Command | What it runs |
 |---|---|
-| `npm test` | All 30 scenarios (28 run and pass; the `@fixme` scenarios are reported as skipped) |
+| `npm test` | All scenarios of all three areas (`@fixme` and by-design skipped scenarios are reported as skipped; `@shared-session` ones are excluded) |
 | `npm run test:headed` | All scenarios with a visible browser |
 | `npm run test:dry-run` | Checks every step has a definition, without opening a browser |
 | `npm run test:login` | `@department-login` (TC01–TC03) |
@@ -48,6 +49,13 @@ later, or set `BROWSER_EXECUTABLE_PATH` to a local Chrome/Chromium.
 | `npm run test:navigation` | `@department-navigation` |
 | `npm run test:verified` | `@verified-behavior` (TC-001, TC-045, TC-028, TC-009/035, TC-008/034, TC-015, TC-031) |
 | `npm run test:negative` | `@negative` (TC_N_xxxx) |
+| `npm run test:search` / `npm run test:logout` | `@search-department` / `@logout` |
+| `npm run test:designation` | `@Designation` (isolated sessions) |
+| `npm run test:location-category` | `@location_category` (isolated sessions) |
+| `npm run test:sequential` | Ordered 11-feature Department run, one shared browser and login |
+| `npm run test:designation:sequential` | Login, 9 Designation features, logout in one shared session |
+| `npm run test:location-category:sequential` | Location Category features in one shared session |
+| `npm run test:chromium` / `test:firefox` / `test:webkit` / `test:all-browsers` | Run via `scripts/run-browsers.js` |
 | `npm run test:parallel` | All scenarios on 4 workers |
 | `npm run test:report` | Cleans old output, runs all scenarios, then builds the Allure HTML report |
 | `npm run typecheck` | TypeScript type check |
@@ -92,7 +100,9 @@ A failed scenario gets a screenshot in both reports and a Playwright trace in
 
 ```
 features/
-  department_management_feature/  Gherkin feature files (one per original spec file)
+  department_management_features/   Department Gherkin features (one per original spec file)
+  designation_management_features/  Designation features (FRD vocabulary)
+  location_category_features/       Location Category features (FRD vocabulary)
 src/
   pages/                       Page objects
     MidcHomePage.ts            ┐ Rebuilt from the specs; same public API as the
@@ -102,11 +112,14 @@ src/
     DepartmentDialog.ts        Add / Edit Department dialog
     DeleteConfirmationDialog.ts
     DepartmentFlows.ts         Multi-step helpers from the specs (addDepartment, createDepartment, openEditDialog)
+    designation/               Designation page objects (see below)
+    location_category/         Location Category page objects (see below)
   steps/                       Step definitions, grouped by domain
   support/
     config.ts                  Reads all environment settings (.env)
     world.ts                   Custom World: browser context, page, page objects, test data
     hooks.ts                   Browser lifecycle, @fixme skipping, screenshots and traces
+    session.ts                 Shared-session login and landing-page handling (SHARED_SESSION=1)
   test-data/                   midc.data.ts (same shape as the original), department.data.ts
   utils/                       Configured expect, test-data template resolver
 cucumber.js                    Cucumber profiles
